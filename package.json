@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "express": "^4.15.2",
     "shopify-api-node": "^2.4.0"
   },
   "devDependencies": {},
