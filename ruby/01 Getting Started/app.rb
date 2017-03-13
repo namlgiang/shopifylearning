@@ -8,7 +8,7 @@ class GiftBasket < Sinatra::Base
   attr_reader :tokens
   API_KEY = ENV['API_KEY']
   API_SECRET = ENV['API_SECRET']
-  APP_URL = "jamie.ngrok.io"
+  APP_URL = "myapp.techsfeed.com"
 
   def initialize
     @tokens = {}
@@ -42,7 +42,7 @@ class GiftBasket < Sinatra::Base
 
     # create webhook for order creation if it doesn't exist
     create_order_webhook
-    
+
     # now that the session is activated, redirect to the bulk edit page
     redirect bulk_edit_url
   end
