@@ -26,7 +26,7 @@
 				},
 				secondary: [
 					// Dropdown example
-					{ 
+					{
 						label: "More",
 						type: "dropdown",
 						links: [
@@ -36,16 +36,16 @@
 							{ label: "Delete", callback: function(){ alert("destroy") } }
 						]
 					},
-					{ 
+					{
 						// Link Button that opens in a new window
-						label: "Preview", href: 'http://<%= shop %>.myshopify.com', 
-						target: "new" 
+						label: "Preview", href: 'http://<%= shop %>.myshopify.com',
+						target: "new"
 					},
-					{ 
-						label: "Open Modal", 
+					{
+						label: "Open Modal",
 						callback: function() {
 							ShopifyApp.Modal.open({
-							  src: 'http://localhost:3000/modal_content',
+							  src: 'http://myapp.techsfeed.com/modal_content',
 							  title: 'A new modal',
 							  width: 'small',
 							  height: 300,
