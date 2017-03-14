@@ -9,9 +9,7 @@ var shopify = new Shopify({
   password: config.secret
 });
 
-app.get("/", function(req, res) {
-  res.send("Hello");
-});
+app.use(express.static('public'))
 
 app.listen("3000", function() {
   console.log("Running on 3000");
