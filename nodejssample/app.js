@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Shopify Authentication
 
 // This function initializes the Shopify OAuth Process
-// The template in views/embedded_app_redirect.ejs is rendered 
+// The template in views/embedded_app_redirect.ejs is rendered
 app.get('/shopify_auth', function(req, res) {
     if (req.query.shop) {
         req.session.shop = req.query.shop;
@@ -44,7 +44,7 @@ app.get('/shopify_auth', function(req, res) {
 // Shopify provides the app the is authorization_code, which is exchanged for an access token
 app.get('/access_token', verifyRequest, function(req, res) {
     if (req.query.shop) {
-        var params = { 
+        var params = {
             client_id: config.oauth.api_key,
             client_secret: config.oauth.client_secret,
             code: req.query.code
@@ -52,14 +52,14 @@ app.get('/access_token', verifyRequest, function(req, res) {
         var req_body = querystring.stringify(params);
         console.log(req_body)
         request({
-            url: 'https://' + req.query.shop + '/admin/oauth/access_token', 
+            url: 'https://' + req.query.shop + '/admin/oauth/access_token',
             method: "POST",
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Content-Length': Buffer.byteLength(req_body)
             },
             body: req_body
-        }, 
+        },
         function(err,resp,body) {
             console.log(body);
             body = JSON.parse(body);
@@ -100,7 +100,7 @@ app.get('/', function(req, res) {
 
 app.get('/add_product', function(req, res) {
     res.render('add_product', {
-        title: 'Add A Product', 
+        title: 'Add A Product',
         api_key: config.oauth.api_key,
         shop: req.session.shop,
     });
@@ -123,14 +123,14 @@ app.get('/products', function(req, res) {
             return next(error);
         body = JSON.parse(body);
         res.render('products', {
-            title: 'Products', 
+            title: 'Products',
             api_key: config.oauth.api_key,
             shop: req.session.shop,
             next: next,
             previous: previous,
             products: body.products
         });
-    })  
+    })
 })
 
 app.post('/products', function(req, res) {
@@ -165,9 +165,9 @@ app.post('/products', function(req, res) {
         body = JSON.parse(body);
         if (body.errors) {
             return res.json(500);
-        } 
+        }
         res.json(201);
-    })  
+    })
 })
 
 function verifyRequest(req, res, next) {
@@ -217,7 +217,7 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-var server_ip_address = '127.0.0.1';
+var server_ip_address = 'localhost';
 app.set('port', process.env.PORT || 3000);
 var server = app.listen(app.get('port'), server_ip_address, function() {
   console.log('Express server listening on port ' + server.address().port);
