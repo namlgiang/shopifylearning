@@ -217,9 +217,9 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-var server_ip_address = 'localhost';
+// var server_ip_address = 'localhost';
 app.set('port', process.env.PORT || 3000);
-var server = app.listen(app.get('port'), server_ip_address, function() {
+var server = app.listen(app.get('port'), function() {
   console.log('Express server listening on port ' + server.address().port);
 });
 
