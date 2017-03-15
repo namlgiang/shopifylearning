@@ -5,7 +5,8 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <title><%= title %></title>
     <script type="text/javascript">
-        if(window.location.href.match(/shop=[^?&]*/g).length > 1) {
+        console.log(window.location.href);
+        if(window.location.href.match(/shop=[^?&]*/g)) {
           var s = window.location.href.match(/shop=[^?&]*/g)[0];
           s = s.replace(/shop=/g, "");
           s = s.replace(/.myshopify.com/g, "");
