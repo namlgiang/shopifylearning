@@ -4,15 +4,6 @@
   	<link rel='stylesheet' href='/stylesheets/foundation.min.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <title><%= title %></title>
-    <script type="text/javascript">
-        console.log(window.location.href);
-        if(window.location.href.match(/shop=[^?&]*/g)) {
-          var s = window.location.href.match(/shop=[^?&]*/g)[0];
-          s = s.replace(/shop=/g, "");
-          s = s.replace(/.myshopify.com/g, "");
-          window.location.href = window.location.origin + "/shopify_auth?shop=" + s;
-        }
-    </script>
   </head>
     <h1>Install the test app!</h1>
     <form action="/shopify_auth" method="GET">
