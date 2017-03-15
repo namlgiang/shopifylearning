@@ -94,6 +94,7 @@ app.get('/', function(req, res) {
             shop: req.session.shop
         });
     } else if(req.query.shop) {
+      req.query.shop = req.query.shop.replace(/.myshopify.com/g, "");
       req.session.shop = req.query.shop;
       res.render('embedded_app_redirect', {
           shop: req.query.shop,
