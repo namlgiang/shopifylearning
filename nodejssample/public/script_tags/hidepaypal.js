@@ -1,5 +1,3 @@
-// (function() {
-  var style = document.createElement("style");
-  style.innerHTML = "h2{display:none}";
-  document.body.append(style);
-// })();
+var style = document.createElement("style");
+style.innerHTML = ".additional-checkout-buttons{display:none}";
+document.body.append(style);
