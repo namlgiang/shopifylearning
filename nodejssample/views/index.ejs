@@ -23,9 +23,11 @@
 		ShopifyApp.Bar.loadingOff();
 	});
 
-	$("#activate").click(function() {
-		$.get("/activate", function(data) {
-			ShopifyApp.flashNotice("Activated Successfully");
+	$(document).ready(function() {
+		$("#activate").click(function() {
+			$.get("/activate", function(data) {
+				ShopifyApp.flashNotice("Activated Successfully");
+			});
 		});
 	});
 	</script>
