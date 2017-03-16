@@ -1,3 +1,3 @@
 var style = document.createElement("style");
 style.innerHTML = ".additional-checkout-buttons{display:none}";
-document.body.append(style);
+document.body.prepend(style);
