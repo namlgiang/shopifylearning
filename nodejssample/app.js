@@ -162,7 +162,7 @@ app.get("/activate", function(req, res) {
           if(body.script_tags[i].src == src) {
             // Script tag already exists
             console.log("Script tag already exists");
-            res.json(201;
+            res.json(201);
             return;
           }
         }
