@@ -21,7 +21,12 @@
 			icon: '/images/logo.png'
 		});
 		ShopifyApp.Bar.loadingOff();
+	});
 
+	$("#activate").click(function() {
+		$.post("/activate", function(data) {
+			ShopifyApp.flashNotice("Activated Successfully");
+		});
 	});
 	</script>
 

@@ -140,6 +140,26 @@ app.post('/products', function(req, res) {
     })
 })
 
+app.get("/activate", function(req, res) {
+    request({
+      method: "POST",
+      url: 'https://' + req.session.shop + '.myshopify.com/admin/script_tags.json',
+      headers: {
+          'X-Shopify-Access-Token': req.session.access_token,
+          'Content-type': 'application/json; charset=utf-8'
+      }
+    }, function(error, response, body){
+        if(error)
+            return next(error);
+        console.log(body);
+        body = JSON.parse(body);
+        if (body.errors) {
+            return res.json(500);
+        }
+        res.json(201);
+    });
+});
+
 function verifyRequest(req, res, next) {
     var map = JSON.parse(JSON.stringify(req.query));
     delete map['signature'];
