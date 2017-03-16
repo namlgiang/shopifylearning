@@ -79,13 +79,6 @@ app.get('/install', function(req, res) {
     });
 })
 
-// Renders content for a modal
-app.get('/modal_content', function(req, res) {
-    res.render('modal_content', {
-        title: 'Embedded App Modal'
-    });
-})
-
 // The home page, checks if we have the access token, if not we are redirected to the install page
 // This check should probably be done on every page, and should be handled by a middleware
 app.get('/', function(req, res) {
@@ -108,41 +101,6 @@ app.get('/', function(req, res) {
     else {
       res.redirect('/install');
     }
-})
-
-app.get('/add_product', function(req, res) {
-    res.render('add_product', {
-        title: 'Add A Product',
-        api_key: config.oauth.api_key,
-        shop: req.session.shop,
-    });
-})
-
-app.get('/products', function(req, res) {
-    var next, previous, page;
-    page = req.query.page ? ~~req.query.page:1;
-
-    next = page + 1;
-    previous = page == 1 ? page : page - 1;
-
-    request.get({
-        url: 'https://' + req.session.shop + '.myshopify.com/admin/products.json?limit=5&page=' + page,
-        headers: {
-            'X-Shopify-Access-Token': req.session.access_token
-        }
-    }, function(error, response, body){
-        if(error)
-            return next(error);
-        body = JSON.parse(body);
-        res.render('products', {
-            title: 'Products',
-            api_key: config.oauth.api_key,
-            shop: req.session.shop,
-            next: next,
-            previous: previous,
-            products: body.products
-        });
-    })
 })
 
 app.post('/products', function(req, res) {
