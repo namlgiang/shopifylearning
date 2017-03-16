@@ -24,7 +24,7 @@
 	});
 
 	$("#activate").click(function() {
-		$.post("/activate", function(data) {
+		$.get("/activate", function(data) {
 			ShopifyApp.flashNotice("Activated Successfully");
 		});
 	});
