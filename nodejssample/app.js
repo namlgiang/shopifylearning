@@ -156,7 +156,51 @@ app.get("/activate", function(req, res) {
         if (body.errors) {
             return res.json(500);
         }
-        res.json(201);
+
+        var src = "https:\/\/myapp.techsfeed.com\/script_tags\/hidepaypal.js";
+        for(var i=0; i<body.script_tags.length; i++) {
+          if(body.script_tags[i].src == src) {
+
+            // Script tag already exists
+
+            console.log("Script tag already exists");
+            res.json(201);
+          }
+          else {
+
+            // Create new script tag
+
+            data = {
+              "script_tag": {
+                "event": "onload",
+                "src": src
+              }
+            }
+            req_body = JSON.stringify(data);
+            console.log(data);
+            console.log(req_body);
+
+            request({
+                method: "POST",
+                url: 'https://' + req.session.shop + '.myshopify.com/admin/script_tags.json',
+                headers: {
+                    'X-Shopify-Access-Token': req.session.access_token,
+                    'Content-type': 'application/json; charset=utf-8'
+                },
+                body: req_body
+            }, function(error, response, body){
+                if(error)
+                    return next(error);
+                console.log(body);
+                body = JSON.parse(body);
+                if (body.errors) {
+                    return res.json(500);
+                }
+                res.json(201);
+            })
+          }
+        }
+
     });
 });
 
