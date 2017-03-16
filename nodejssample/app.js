@@ -11,6 +11,8 @@ var config = require('./settings')
 var session = require('express-session')
 var app = express();
 
+config.oauth.scope = "read_script_tags,write_script_tags";
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
