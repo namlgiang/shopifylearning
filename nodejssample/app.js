@@ -142,7 +142,7 @@ app.post('/products', function(req, res) {
 
 app.get("/activate", function(req, res) {
     request({
-      method: "POST",
+      method: "GET",
       url: 'https://' + req.session.shop + '.myshopify.com/admin/script_tags.json',
       headers: {
           'X-Shopify-Access-Token': req.session.access_token,
