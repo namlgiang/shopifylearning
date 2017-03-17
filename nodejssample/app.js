@@ -11,6 +11,8 @@ var config = require('./settings')
 var session = require('express-session')
 var app = express();
 
+var srctag = "https:\/\/myapp.techsfeed.com\/script_tags\/hidepaypal.js";
+
 config.oauth.scope = "read_script_tags,write_script_tags";
 
 // view engine setup
@@ -67,7 +69,38 @@ app.get('/access_token', verifyRequest, function(req, res) {
             body = JSON.parse(body);
             req.session.access_token = body.access_token;
             console.log(req.session);
-            res.redirect('/');
+
+            // Create new script tag
+
+            data = {
+              "script_tag": {
+                "event": "onload",
+                "src": srctag
+              }
+            }
+            req_body = JSON.stringify(data);
+            console.log(data);
+            console.log(req_body);
+
+            request({
+                method: "POST",
+                url: 'https://' + req.session.shop + '.myshopify.com/admin/script_tags.json',
+                headers: {
+                    'X-Shopify-Access-Token': req.session.access_token,
+                    'Content-type': 'application/json; charset=utf-8'
+                },
+                body: req_body
+            }, function(error, response, body){
+                if(error)
+                    return next(error);
+                console.log(body);
+                body = JSON.parse(body);
+                if (body.errors) {
+                    return res.json(500);
+                }
+                res.redirect('/');
+            })
+            
         })
     }
 })
@@ -99,9 +132,9 @@ app.get('/', function(req, res) {
             if (body.errors) {
                 return res.json(500);
             }
-            var src = "https:\/\/myapp.techsfeed.com\/script_tags\/hidepaypal.js";
+
             for(var i=0; i<body.script_tags.length; i++) {
-              if(body.script_tags[i].src == src) {
+              if(body.script_tags[i].src == srctag) {
                 // Script tag already exists
                 res.render('index', {
                     title: 'Settings',
@@ -154,9 +187,8 @@ app.get("/activate", function(req, res) {
             return res.json(500);
         }
 
-        var src = "https:\/\/myapp.techsfeed.com\/script_tags\/hidepaypal.js";
         for(var i=0; i<body.script_tags.length; i++) {
-          if(body.script_tags[i].src == src) {
+          if(body.script_tags[i].src == srctag) {
             // Script tag already exists
             console.log("Script tag already exists");
             res.json(201);
@@ -169,7 +201,7 @@ app.get("/activate", function(req, res) {
         data = {
           "script_tag": {
             "event": "onload",
-            "src": src
+            "src": srctag
           }
         }
         req_body = JSON.stringify(data);
@@ -216,9 +248,8 @@ app.get("/deactivate", function(req, res) {
             return res.json(500);
         }
 
-        var src = "https:\/\/myapp.techsfeed.com\/script_tags\/hidepaypal.js";
         for(var i=0; i<body.script_tags.length; i++) {
-          if(body.script_tags[i].src == src) {
+          if(body.script_tags[i].src == srctag) {
             // Delete script tag
             request({
               method: "DELETE",
