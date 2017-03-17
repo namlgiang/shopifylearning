@@ -84,7 +84,7 @@ app.get('/install', function(req, res) {
 app.get('/', function(req, res) {
     if (req.session.access_token) {
         res.render('index', {
-            title: 'Home',
+            title: 'Hide Checkout With PayPal',
             api_key: config.oauth.api_key,
             shop: req.session.shop
         });
