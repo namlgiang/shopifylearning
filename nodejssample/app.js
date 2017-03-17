@@ -91,13 +91,13 @@ app.get('/', function(req, res) {
               'Content-type': 'application/json; charset=utf-8'
           }
         }, function(error, response, body){
-          if(error)
-              return next(error);
-          console.log(body);
-          body = JSON.parse(body);
-          if (body.errors) {
-              return res.json(500);
-          }
+            if(error)
+                return next(error);
+            console.log(body);
+            body = JSON.parse(body);
+            if (body.errors) {
+                return res.json(500);
+            }
             var src = "https:\/\/myapp.techsfeed.com\/script_tags\/hidepaypal.js";
             for(var i=0; i<body.script_tags.length; i++) {
               if(body.script_tags[i].src == src) {
