@@ -164,6 +164,43 @@ app.get("/activate", function(req, res) {
     });
 });
 
+
+app.get("/deactivate", function(req, res) {
+    request({
+      method: "GET",
+      url: 'https://' + req.session.shop + '.myshopify.com/admin/script_tags.json',
+      headers: {
+          'X-Shopify-Access-Token': req.session.access_token,
+          'Content-type': 'application/json; charset=utf-8'
+      }
+    }, function(error, response, body){
+        if(error)
+            return next(error);
+        console.log(body);
+        body = JSON.parse(body);
+        if (body.errors) {
+            return res.json(500);
+        }
+
+        var src = "https:\/\/myapp.techsfeed.com\/script_tags\/hidepaypal.js";
+        for(var i=0; i<body.script_tags.length; i++) {
+          if(body.script_tags[i].src == src) {
+            // Delete script tag
+            request({
+              method: "DELETE",
+              url: 'https://' + req.session.shop + '.myshopify.com/admin/script_tags/'+body.script_tags[i].id+'.json',
+              headers: {
+                  'X-Shopify-Access-Token': req.session.access_token,
+                  'Content-type': 'application/json; charset=utf-8'
+              }
+            });
+          }
+        }
+
+        res.json(201);
+    });
+});
+
 function verifyRequest(req, res, next) {
     var map = JSON.parse(JSON.stringify(req.query));
     delete map['signature'];

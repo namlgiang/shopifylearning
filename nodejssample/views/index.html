@@ -23,15 +23,29 @@
 		ShopifyApp.Bar.loadingOff();
 	});
 
+	var busy = false;
 	$(document).ready(function() {
-		$("#activate").click(function() {
-			$.get("/activate", function(data) {
-				ShopifyApp.flashNotice("Activated Successfully");
-			});
-		});
+
 		$(".switch").click(function() {
-			$(this).toggleClass("on");
+			if(busy) return;
+
+			busy = true;
+			if(!$(this).hasClass("on")) {
+				// Activate
+				$.get("/activate", function(data) {
+					ShopifyApp.flashNotice("PayPal Button has been hidden!");
+					busy = false;
+				});
+			}
+			else {
+				// Deactivate
+				$.get("/deactivate", function(data) {
+					ShopifyApp.flashNotice("PayPal Button has been put back!");
+					busy = false;
+				});
+			}
 		});
+
 	});
 	</script>
 
