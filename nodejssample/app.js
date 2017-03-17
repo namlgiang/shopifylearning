@@ -84,7 +84,7 @@ app.get('/install', function(req, res) {
 app.get('/', function(req, res) {
     if (req.session.access_token) {
         res.render('index', {
-            title: 'Hide Checkout With PayPal',
+            title: 'Settings',
             api_key: config.oauth.api_key,
             shop: req.session.shop
         });
@@ -101,43 +101,6 @@ app.get('/', function(req, res) {
     else {
       res.redirect('/install');
     }
-})
-
-app.post('/products', function(req, res) {
-    data = {
-     product: {
-            title: req.body.title,
-            body_html: req.body.body_html,
-            images: [
-                {
-                    src: req.body.image_src
-                }
-            ],
-            vendor: "Vendor",
-            product_type: "Type"
-        }
-    }
-    req_body = JSON.stringify(data);
-    console.log(data);
-    console.log(req_body);
-    request({
-        method: "POST",
-        url: 'https://' + req.session.shop + '.myshopify.com/admin/products.json',
-        headers: {
-            'X-Shopify-Access-Token': req.session.access_token,
-            'Content-type': 'application/json; charset=utf-8'
-        },
-        body: req_body
-    }, function(error, response, body){
-        if(error)
-            return next(error);
-        console.log(body);
-        body = JSON.parse(body);
-        if (body.errors) {
-            return res.json(500);
-        }
-        res.json(201);
-    })
 })
 
 app.get("/activate", function(req, res) {
