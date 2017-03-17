@@ -6,3 +6,29 @@ body {
 a {
   color: #00B7FF;
 }
+
+.switch{
+  display: inline-block;
+  width: 50px;
+  height: 30px;
+  background: #666;
+  border-radius: 100px;
+  vertical-align: middle;
+  margin-bottom: 4px;
+  margin-right: 10px;
+  transition: 200ms;
+}
+
+.switch::before {
+  content: "";
+  display: block;
+  width: 24px;
+  height: 24px;
+  background: #fff;
+  border-radius: 50px;
+  margin: 3px;
+  transition: 200ms;
+}
+
+.switch.on { background: #0084ff;}
+.switch.on::before { margin-left: 23px;}
