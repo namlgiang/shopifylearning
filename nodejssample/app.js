@@ -83,11 +83,38 @@ app.get('/install', function(req, res) {
 // This check should probably be done on every page, and should be handled by a middleware
 app.get('/', function(req, res) {
     if (req.session.access_token) {
-        res.render('index', {
-            title: 'Settings',
-            api_key: config.oauth.api_key,
-            shop: req.session.shop
-        });
+        request({
+          method: "GET",
+          url: 'https://' + req.session.shop + '.myshopify.com/admin/script_tags.json',
+          headers: {
+              'X-Shopify-Access-Token': req.session.access_token,
+              'Content-type': 'application/json; charset=utf-8'
+          }
+        }, function(error, response, body){
+
+            var src = "https:\/\/myapp.techsfeed.com\/script_tags\/hidepaypal.js";
+            for(var i=0; i<body.script_tags.length; i++) {
+              if(body.script_tags[i].src == src) {
+                // Script tag already exists
+                res.render('index', {
+                    title: 'Settings',
+                    api_key: config.oauth.api_key,
+                    shop: req.session.shop,
+                    state: "on"
+                });
+                return;
+              }
+            }
+
+            res.render('index', {
+                title: 'Settings',
+                api_key: config.oauth.api_key,
+                shop: req.session.shop,
+                state: ""
+            });
+        })
+
+
     } else if(req.query.shop) {
       req.query.shop = req.query.shop.replace(/.myshopify.com/g, "");
       req.session.shop = req.query.shop;
