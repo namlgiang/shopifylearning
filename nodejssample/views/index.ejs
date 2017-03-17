@@ -33,7 +33,7 @@
 			if(!$(this).hasClass("on")) {
 				// Activate
 				$.get("/activate", function(data) {
-					$(this).addClass("on");
+					$(".switch").addClass("on");
 					ShopifyApp.flashNotice("PayPal Button has been hidden!");
 					busy = false;
 				});
@@ -41,7 +41,7 @@
 			else {
 				// Deactivate
 				$.get("/deactivate", function(data) {
-					$(this).removeClass("on");
+					$(".switch").removeClass("on");
 					ShopifyApp.flashNotice("PayPal Button has been put back!");
 					busy = false;
 				});
