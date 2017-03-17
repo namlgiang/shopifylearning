@@ -93,6 +93,7 @@ app.get('/', function(req, res) {
         }, function(error, response, body){
             if(error)
                 return next(error);
+            console.log(req.session.shop);
             console.log(body);
             body = JSON.parse(body);
             if (body.errors) {
