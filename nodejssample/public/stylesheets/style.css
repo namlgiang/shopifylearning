@@ -32,3 +32,13 @@ a {
 
 .switch.on { background: #0084ff;}
 .switch.on::before { margin-left: 23px;}
+
+i {
+  font-size: 13px;
+  color: #666;
+}
+
+h1 {
+  font-size: 20px;
+  margin-bottom: 30px;
+}
