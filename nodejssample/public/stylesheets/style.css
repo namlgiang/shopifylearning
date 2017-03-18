@@ -42,3 +42,14 @@ h1 {
   font-size: 20px;
   margin-bottom: 30px;
 }
+
+body {
+  background: #ebeef0;
+}
+
+.ui-card {
+  border-radius: 3px;
+  padding: 20px 20px 30px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: #fff;
+}
